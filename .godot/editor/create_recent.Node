@@ -1,3 +1,5 @@
+CPUParticles2D
+Label
 Timer
 Node2D
 Node
@@ -11,4 +13,3 @@ J_Piece
 Sprite2D
 Control
 CollisionShape2D
-Area2D

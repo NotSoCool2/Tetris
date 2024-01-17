@@ -18,18 +18,39 @@ public partial class Main : Node
 	PieceController controller;
 	Random rand = new Random();
 
+	Label scoreLabel;
+	int score;
+	char b2b;
+	enum backToBack {
+		TETRIS, TSPIN, NONE
+	}
+
 	public override void _Ready() {
 		for (int i = 0; i < next.Length; i++) {
 			nextPiecePoints[i] = ((Node2D)FindChild("Next")).Position + new Vector2(0, i * 96);
 		}
 
 		controller = (PieceController)FindChild("PieceController");
+		scoreLabel = (Label)FindChild("Score");
 
 		InitPieces();
 		StartGame();
+
+		
 	}
 
-	public void InitPieces() {
+    public override void _Process(double delta) {
+		if (Input.IsActionJustPressed("Reset")) {
+			foreach (Piece p in next) p.QueueFree();
+			foreach (Node n in gridObj.GetChildren()) n.QueueFree();
+			if (holdPiece != null) { holdPiece.QueueFree(); holdPiece = null; }
+			grid.EmptyGrid();
+			IncreaseScore(-score);
+			StartGame();
+		}
+    }
+
+    public void InitPieces() {
 		pieceObjects[0] = ResourceLoader.Load<PackedScene>("res://Scenes/Pieces/i_piece.tscn");
 		pieceObjects[1] = ResourceLoader.Load<PackedScene>("res://Scenes/Pieces/t_piece.tscn");
 		pieceObjects[2] = ResourceLoader.Load<PackedScene>("res://Scenes/Pieces/o_piece.tscn");
@@ -72,6 +93,7 @@ public partial class Main : Node
 
 		if (pieceBag.Count == 0) pieceBag = GeneratePieceBag(); // If the bag is finished gen a new one
 		SpawnPiece();
+		controller.sd = controller.sdLeniance;
 	}
 
 	public Queue<int> GeneratePieceBag() {
@@ -109,15 +131,18 @@ public partial class Main : Node
 		AddChild(holdPiece);
 		holdPiece.Position = holdPiecePos;
 		holdPiece.Hold();
+
+		if (isFirst) GetNextPiece();
+		else SpawnPiece();
+
 		controller.piece.GetParent().RemoveChild(controller.piece);
 		gridObj.AddChild(controller.piece);
 		controller.piece.DisplayGhostPiece();
 
-		if (isFirst) GetNextPiece();
-		else SpawnPiece();
 	}
 
 	public void CheckLines() {
+		int linesCleared = 0;
 		for (int i = 0; i < grid.GetHeight(); i++) {
 			bool lineFull = true;
 			for (int j = 0; j < grid.GetWidth(); j++) {
@@ -128,13 +153,42 @@ public partial class Main : Node
 			}
 			if (lineFull) {
 				grid.ClearLine(i);
+				linesCleared++;
 			}
+		}
+
+		switch (linesCleared) {
+			case 0:
+				if (false) IncreaseScore(400); // if (false) represents T-Spin for now
+				return;
+			case 1:
+				if (false) IncreaseScore(800);
+				else IncreaseScore(100);
+				return;
+			case 2:
+				if (false) IncreaseScore(1200);
+				else IncreaseScore(300);
+				return;
+			case 3:
+				if (false) IncreaseScore(1600);
+				else IncreaseScore(500);
+				return;
+			case 4:
+				IncreaseScore(800);
+				return;
+			default:
+				return;
 		}
 	}
 
 	public void LowerPiece() {
 		controller.piece.ShiftD();
 		fallTimer.Start(fallTime);
+	}
+
+	public void IncreaseScore(int s) {
+		score += s;
+		scoreLabel.Text = $"Score: {score}";
 	}
 	
 	public void DebugGridInformation() {

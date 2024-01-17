@@ -103,23 +103,34 @@ public abstract partial class Piece : Node2D {
     }
 
 	public void ShiftL() {
-		if (Move((-1, 0))) pos = (pos.x - 1, pos.y);
-		DisplayMovement();
+		if (Move((-1, 0))) {
+			pos = (pos.x - 1, pos.y);
+			DisplayMovement();
+		}
 	}
 	public void ShiftR() {
-		if (Move((1, 0))) pos = (pos.x + 1, pos.y);
-		DisplayMovement();
+		if (Move((1, 0))) {
+			pos = (pos.x + 1, pos.y);
+			DisplayMovement();
+		}
 	}
-	public void ShiftD() {
-		if (Move((0, 1))) pos = (pos.x, pos.y + 1);
-		DisplayMovement();
+	public bool ShiftD() {
+		if (Move((0, 1))) {
+			pos = (pos.x, pos.y + 1);
+			DisplayMovement();
+			return true;
+		}
+		return false;
 	}
-	public void HardDrop() {
+	public int HardDrop() { // Returns how many steps it took
+		int counter = 0;
 		while (Move((0, 1))) {
 			pos = (pos.x, pos.y + 1);
+			counter++;
 		}
 		DisplayMovement();
 		Drop();
+		return counter;
 	}
 
 	public void Drop() {

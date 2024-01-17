@@ -11,21 +11,21 @@ gridObj = NodePath("Grid")
 fallTimer = NodePath("FallTimer")
 fallTime = 0.6
 
-[node name="Grid" type="Node2D" parent="."]
-position = Vector2(816, -780)
-
-[node name="GridImage" type="Sprite2D" parent="Grid"]
+[node name="GridImage" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-16, 1584)
+position = Vector2(800, 804)
 texture = ExtResource("2_4olyd")
 offset = Vector2(160, -336)
 
-[node name="SpawnPos" type="Node2D" parent="Grid"]
-position = Vector2(128, 896)
+[node name="Grid" type="Node2D" parent="."]
+position = Vector2(816, -780)
 
 [node name="ShitHolder" type="Node" parent="."]
 
 [node name="PieceController" parent="." instance=ExtResource("2_t0en4")]
+
+[node name="SpawnPos" type="Node2D" parent="."]
+position = Vector2(944, 116)
 
 [node name="Next" type="Node2D" parent="."]
 position = Vector2(1296, 162)
@@ -34,5 +34,24 @@ position = Vector2(1296, 162)
 position = Vector2(632, 162)
 
 [node name="FallTimer" type="Timer" parent="."]
+
+[node name="Score" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -377.0
+offset_bottom = 137.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 100
+text = "Score: 0"
+
+[node name="ScoreParticles" type="CPUParticles2D" parent="."]
+position = Vector2(1714, 193)
+amount = 10
+emission_shape = 1
+emission_sphere_radius = 100.0
+direction = Vector2(0, -1)
+initial_velocity_min = 50.0
+initial_velocity_max = 300.0
 
 [connection signal="timeout" from="FallTimer" to="." method="LowerPiece"]

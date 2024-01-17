@@ -1,2 +1,2 @@
-﻿32108
-G:/SteamLibrary/steamapps/common/Godot Engine/godot.windows.opt.tools.64.exe
+﻿55203
+D:/SteamLibrary/steamapps/common/Godot Engine/godot.windows.opt.tools.64.exe

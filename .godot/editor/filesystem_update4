@@ -1,6 +1,4 @@
 res://main.tscn
-res://Scenes/piece_controller.tscn
-res://Scenes/ghost_tile.tscn
 res://Scripts/GhostPiece.cs
 res://Scripts/Grid.cs
 res://Scripts/Main.cs
@@ -14,5 +12,4 @@ res://Scripts/Pieces/S_Piece.cs
 res://Scripts/Pieces/T_Piece.cs
 res://Scripts/Pieces/Z_Piece.cs
 res://Scripts/Tile.cs
-res://Scenes/Pieces/i_piece.tscn
-res://Scenes/Pieces/o_piece.tscn
+res://Scenes/piece_controller.tscn

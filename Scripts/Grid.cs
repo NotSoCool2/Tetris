@@ -79,4 +79,12 @@ public partial class Grid : Node2D {
 		}
 		grid[0] = new Tile[width];
 	}
+
+	public void EmptyGrid() {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				grid[i][j] = null;
+			}
+		}
+	}
 }

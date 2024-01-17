@@ -4,6 +4,8 @@ using System;
 public partial class PieceController : Node {
 	[Export] float arr, das, sdf;
 	[Export] Timer arrTimer, dasTimer, sdTimer;
+	[Export] public int sdLeniance;
+	public int sd;
 	bool autoRepeat;
 	bool right;
 
@@ -32,18 +34,26 @@ public partial class PieceController : Node {
 			right = true;
 			dasTimer.Start(das / 1000);
 		}
-		if (Input.IsActionJustPressed("R Rotate")) piece.RotateR();
-		if (Input.IsActionJustPressed("L Rotate")) piece.RotateL();
-		if (Input.IsActionJustPressed("H Rotate")) piece.RotateH();
+		if (Input.IsActionJustPressed("R Rotate")) { piece.RotateR(); sd = sdLeniance; }
+		if (Input.IsActionJustPressed("L Rotate")) { piece.RotateL(); sd = sdLeniance; }
+		if (Input.IsActionJustPressed("H Rotate")) { piece.RotateH(); sd = sdLeniance; }
 
 		if (Input.IsActionJustPressed("Soft Drop")) {
-			piece.ShiftD();
+			if (piece.ShiftD()) main.IncreaseScore(1);
+			else {
+				if (sd <= 0) {
+					piece.Drop();
+					main.GetNextPiece();
+				}
+				else sd--;
+			}
 			sdTimer.Start(1 / (2 * sdf));
 		}
 		if (Input.IsActionJustPressed("Hard Drop")) {
 			// Drop that thug shaker (might not work)
-			piece.HardDrop();
+			int score = piece.HardDrop() * 2;
 			main.GetNextPiece();
+			main.IncreaseScore(score);
 		}
 
 		if (Input.IsActionJustPressed("Hold")) {
@@ -72,7 +82,14 @@ public partial class PieceController : Node {
 
 	public void SdTimerDone() {
 		if (Input.IsActionPressed("Soft Drop")) {
-			piece.ShiftD();
+			if (piece.ShiftD()) main.IncreaseScore(1);
+			else {
+				if (sd <= 0) {
+					piece.Drop();
+					main.GetNextPiece();
+				}
+				else sd--;
+			}
 			sdTimer.Start(1 / (2 * sdf));
 		}
 	}

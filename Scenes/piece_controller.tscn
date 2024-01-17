@@ -10,6 +10,7 @@ sdf = 12.0
 arrTimer = NodePath("ARRTimer")
 dasTimer = NodePath("DASTimer")
 sdTimer = NodePath("SDTimer")
+sdLeniance = 5
 
 [node name="ARRTimer" type="Timer" parent="."]
 one_shot = true

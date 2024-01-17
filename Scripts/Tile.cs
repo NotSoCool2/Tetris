@@ -9,7 +9,10 @@ public partial class Tile : Node2D {
 		grid = g;
 		pos = p;
 		tileObj = obj;
-		if (!grid.PlaceInGrid(this, p)) GD.PrintErr($"Can't Spawn a tile on ({pos.x}, {pos.y})");
+		if (!grid.PlaceInGrid(this, p)) {
+			GD.PrintErr($"Can't Spawn a tile on ({pos.x}, {pos.y})");
+			GD.Print(FindParent("Main"));
+		}
 	}
 
 	public Tile((int, int) p) { // Scan Tile (ghost tiles)

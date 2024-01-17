@@ -27,7 +27,7 @@ public abstract partial class Piece : Node2D {
 		}
 		DisplayMovement();
 	}
-	// Custom functions
+	
 	public virtual void RotateL() {
 		rotation -= 1;
         rotation = (rotation + 4) % 4;
@@ -38,6 +38,7 @@ public abstract partial class Piece : Node2D {
         }
 		DisplayMovement();
 	}
+
 	public virtual void RotateR() {
 		rotation += 1;
         rotation = (rotation + 4) % 4;
@@ -49,6 +50,7 @@ public abstract partial class Piece : Node2D {
         }
 		DisplayMovement();
 	}
+	
 	public void RotateH() { // Doesnt do any kicking, just kinda acts as a 180 flip and sees if it can be placed
 		rotation += 2;
 		rotation = rotation % 4;

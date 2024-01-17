@@ -11,7 +11,7 @@ public partial class Main : Node
 	Vector2[] nextPiecePoints = new Vector2[5];
 	public PackedScene garbageTile;
 	public Piece holdPiece = null;
-	Grid grid = new();
+	Grid grid = new(10, 50);
 	PackedScene[] pieceObjects = new PackedScene[7];
 	Piece[] next = new Piece[5];
 	Queue<int> pieceBag;
@@ -94,15 +94,14 @@ public partial class Main : Node
 	}
 
 	public void Hold() {
-		if (holdPiece != null) { // Handles case for first held piece
+		bool isFirst = holdPiece == null;
+		if (!isFirst) { // Default case for holding
 			Piece temp = holdPiece;
 			holdPiece = controller.piece;
 			controller.piece = temp;
-			SpawnPiece();
 		}
-		else { // Default case for holding
+		else { // Handles case for first held piece
 			holdPiece = controller.piece;
-			GetNextPiece();
 		}
 
 		// This is mostly a bunch of parent swapping, very suboptimal but whateva
@@ -113,6 +112,9 @@ public partial class Main : Node
 		controller.piece.GetParent().RemoveChild(controller.piece);
 		gridObj.AddChild(controller.piece);
 		controller.piece.DisplayGhostPiece();
+
+		if (isFirst) GetNextPiece();
+		else SpawnPiece();
 	}
 
 	public void CheckLines() {

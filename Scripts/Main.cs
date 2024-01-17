@@ -55,6 +55,7 @@ public partial class Main : Node
 		GetNextPiece();
 		fallTimer.Start(fallTime);
 	}
+	
 	public void GetNextPiece() {
 		controller.piece = next[0]; // Set the piece at the top of the next line to be the controlled one
 		for (int i = 0; i < next.Length - 1; i++) {
@@ -68,7 +69,6 @@ public partial class Main : Node
 		gridObj.AddChild(controller.piece);
 		newPiece.Position = nextPiecePoints[next.Length - 1]; // Place the new next piece on the next line
 		next[next.Length - 1] = newPiece;
-
 
 		if (pieceBag.Count == 0) pieceBag = GeneratePieceBag(); // If the bag is finished gen a new one
 		SpawnPiece();

@@ -28,7 +28,7 @@ public abstract partial class Piece : Node2D {
 		DisplayMovement();
 	}
 	// Custom functions
-	public void RotateL() {
+	public virtual void RotateL() {
 		rotation -= 1;
         rotation = (rotation + 4) % 4;
         if (!canRotate(false)) {
@@ -38,7 +38,7 @@ public abstract partial class Piece : Node2D {
         }
 		DisplayMovement();
 	}
-	public void RotateR() {
+	public virtual void RotateR() {
 		rotation += 1;
         rotation = (rotation + 4) % 4;
 		
@@ -115,7 +115,6 @@ public abstract partial class Piece : Node2D {
 	public void HardDrop() {
 		while (Move((0, 1))) {
 			pos = (pos.x, pos.y + 1);
-			GD.Print(pos);
 		}
 		DisplayMovement();
 		Drop();

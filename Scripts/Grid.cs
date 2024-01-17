@@ -69,7 +69,6 @@ public partial class Grid : Node2D {
 			grid[index][i].tileObj.QueueFree();
 		}
 		for (int i = index; i > 0; i--) {
-			GD.Print($"Grid[i]: {grid[i]}, Grid[i-1]: {grid[i - 1]}");
 			grid[i] = grid[i - 1];
 			for (int j = 0; j < width; j++) {
 				Tile cur = grid[i][j];

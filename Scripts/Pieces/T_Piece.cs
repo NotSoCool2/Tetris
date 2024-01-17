@@ -50,4 +50,13 @@ public partial class T_Piece : Piece {
         }
         return false;
     }
+
+    public override void RotateL() {
+        base.RotateL();
+        isTSpin();
+    }
+    public override void RotateR() {
+        base.RotateR();
+        isTSpin();
+    }
 }

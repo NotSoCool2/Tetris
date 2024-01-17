@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c17xob6v5kbw4"]
+
+[ext_resource type="Script" path="res://Scripts/GhostPiece.cs" id="1_5pw6q"]
+
+[node name="GhostPiece" type="Node2D"]
+script = ExtResource("1_5pw6q")

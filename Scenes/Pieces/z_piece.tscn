@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://b30vh1x0s1bbm"]
+
+[ext_resource type="Script" path="res://Scripts/Pieces/Z_Piece.cs" id="1_a4tdx"]
+[ext_resource type="PackedScene" uid="uid://q6mpmumayjml" path="res://Scenes/tile.tscn" id="1_iy1ux"]
+
+[node name="Z-Piece" type="Node2D"]
+script = ExtResource("1_a4tdx")
+
+[node name="Tile1" parent="." instance=ExtResource("1_iy1ux")]
+modulate = Color(0.976471, 0.305882, 0.266667, 1)
+
+[node name="Tile2" parent="." instance=ExtResource("1_iy1ux")]
+modulate = Color(0.976471, 0.305882, 0.266667, 1)
+position = Vector2(-32, -32)
+
+[node name="Tile3" parent="." instance=ExtResource("1_iy1ux")]
+modulate = Color(0.976471, 0.305882, 0.266667, 1)
+position = Vector2(0, -32)
+
+[node name="Tile4" parent="." instance=ExtResource("1_iy1ux")]
+modulate = Color(0.976471, 0.305882, 0.266667, 1)
+position = Vector2(32, 0)

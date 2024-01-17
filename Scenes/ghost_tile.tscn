@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://8281de517df8"]
+
+[ext_resource type="PackedScene" uid="uid://q6mpmumayjml" path="res://Scenes/tile.tscn" id="1_mm3i5"]
+
+[node name="GhostTile" type="Node2D"]
+
+[node name="Tile" parent="." instance=ExtResource("1_mm3i5")]
+modulate = Color(0.733333, 0.733333, 0.733333, 0.313726)
+z_index = -1

@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://njsst6ixu0xn"]
+
+[ext_resource type="Script" path="res://Scripts/PieceController.cs" id="1_tf7qm"]
+
+[node name="PieceController" type="Node" node_paths=PackedStringArray("arrTimer", "dasTimer", "sdTimer")]
+script = ExtResource("1_tf7qm")
+arr = 33.0
+das = 142.0
+sdf = 12.0
+arrTimer = NodePath("ARRTimer")
+dasTimer = NodePath("DASTimer")
+sdTimer = NodePath("SDTimer")
+
+[node name="ARRTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DASTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SDTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ARRTimer" to="." method="ArrTimerDone"]
+[connection signal="timeout" from="DASTimer" to="." method="DasTimerDone"]
+[connection signal="timeout" from="SDTimer" to="." method="SdTimerDone"]

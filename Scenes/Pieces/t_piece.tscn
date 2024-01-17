@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdv7vkkxec48q"]
+
+[ext_resource type="Script" path="res://Scripts/Pieces/T_Piece.cs" id="1_gtqxg"]
+[ext_resource type="PackedScene" uid="uid://q6mpmumayjml" path="res://Scenes/tile.tscn" id="1_whu7n"]
+
+[node name="T-Piece" type="Node2D"]
+script = ExtResource("1_gtqxg")
+
+[node name="Tile1" parent="." instance=ExtResource("1_whu7n")]
+modulate = Color(0.776471, 0.345098, 0.74902, 1)
+
+[node name="Tile2" parent="." instance=ExtResource("1_whu7n")]
+modulate = Color(0.776471, 0.345098, 0.74902, 1)
+position = Vector2(-32, 0)
+
+[node name="Tile3" parent="." instance=ExtResource("1_whu7n")]
+modulate = Color(0.776471, 0.345098, 0.74902, 1)
+position = Vector2(0, -32)
+
+[node name="Tile4" parent="." instance=ExtResource("1_whu7n")]
+modulate = Color(0.776471, 0.345098, 0.74902, 1)
+position = Vector2(32, 0)

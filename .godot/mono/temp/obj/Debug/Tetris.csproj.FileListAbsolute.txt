@@ -1,0 +1,17 @@
+G:\Godot Games\Tetris\.godot\mono\temp\bin\Debug\Tetris.deps.json
+G:\Godot Games\Tetris\.godot\mono\temp\bin\Debug\Tetris.runtimeconfig.json
+G:\Godot Games\Tetris\.godot\mono\temp\bin\Debug\Tetris.dll
+G:\Godot Games\Tetris\.godot\mono\temp\bin\Debug\Tetris.pdb
+G:\Godot Games\Tetris\.godot\mono\temp\bin\Debug\GodotSharp.dll
+G:\Godot Games\Tetris\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.csproj.AssemblyReference.cache
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.GeneratedMSBuildEditorConfig.editorconfig
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.AssemblyInfoInputs.cache
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.AssemblyInfo.cs
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.csproj.CoreCompileInputs.cache
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.csproj.CopyComplete
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.dll
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\refint\Tetris.dll
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.pdb
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\Tetris.genruntimeconfig.cache
+G:\Godot Games\Tetris\.godot\mono\temp\obj\Debug\ref\Tetris.dll

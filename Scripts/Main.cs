@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 public partial class Main : Node
 {
+	// General Variables
 	[Export] Vector2 holdPiecePos;
 	[Export] Node2D gridObj;
 	[Export] Timer fallTimer;
 	[Export] double fallTime;
+	[Export] int graceFalls;
 	Vector2[] nextPiecePoints = new Vector2[5];
 	public PackedScene garbageTile;
 	public Piece holdPiece = null;
@@ -18,12 +20,35 @@ public partial class Main : Node
 	PieceController controller;
 	Random rand = new Random();
 
+	// Score and level variables
 	Label scoreLabel;
-	int score;
-	char b2b;
-	enum backToBack {
-		TETRIS, TSPIN, NONE
-	}
+	Label levelLabel;
+	int score = 0;
+	int level = 1;
+	int lineCount = 0;
+	enum backToBack { TETRIS, TSPIN, NONE }
+	backToBack b2b;
+	int b2bCount = -1;
+
+	// Game variables
+	int grace;
+	Dictionary<int, double> dropSpeeds = new Dictionary<int, double> {
+		{ 0, 48/60.0 },
+		{ 1, 43/60.0 },
+		{ 2, 38/60.0 },
+		{ 3, 33/60.0 },
+		{ 4, 28/60.0 },
+		{ 5, 23/60.0 },
+		{ 6, 18/60.0 },
+		{ 7, 13/60.0 },
+		{ 8, 8/60.0 },
+		{ 9, 6/60.0 },
+		{ 10, 5/60.0 },
+		{ 13, 4/60.0 },
+		{ 16, 3/60.0 },
+		{ 19, 2/60.0 },
+		{ 29, 1/60.0 },
+	};
 
 	public override void _Ready() {
 		for (int i = 0; i < next.Length; i++) {
@@ -32,11 +57,10 @@ public partial class Main : Node
 
 		controller = (PieceController)FindChild("PieceController");
 		scoreLabel = (Label)FindChild("Score");
+		levelLabel = (Label)FindChild("Level");
 
 		InitPieces();
 		StartGame();
-
-		
 	}
 
     public override void _Process(double delta) {
@@ -45,7 +69,11 @@ public partial class Main : Node
 			foreach (Node n in gridObj.GetChildren()) n.QueueFree();
 			if (holdPiece != null) { holdPiece.QueueFree(); holdPiece = null; }
 			grid.EmptyGrid();
-			IncreaseScore(-score);
+			score = 0;
+			scoreLabel.Text = "Level: 0";
+			level = 1;
+			lineCount = 0;
+			levelLabel.Text = "Level: 1\n0/10";
 			StartGame();
 		}
     }
@@ -75,6 +103,7 @@ public partial class Main : Node
 
 		GetNextPiece();
 		fallTimer.Start(fallTime);
+		grace = graceFalls;
 	}
 	
 	public void GetNextPiece() {
@@ -93,7 +122,9 @@ public partial class Main : Node
 
 		if (pieceBag.Count == 0) pieceBag = GeneratePieceBag(); // If the bag is finished gen a new one
 		SpawnPiece();
-		controller.sd = controller.sdLeniance;
+
+		controller.sd = controller.sdGrace;
+		grace = graceFalls;
 	}
 
 	public Queue<int> GeneratePieceBag() {
@@ -121,6 +152,8 @@ public partial class Main : Node
 			Piece temp = holdPiece;
 			holdPiece = controller.piece;
 			controller.piece = temp;
+
+			grace = graceFalls;
 		}
 		else { // Handles case for first held piece
 			holdPiece = controller.piece;
@@ -141,7 +174,7 @@ public partial class Main : Node
 
 	}
 
-	public void CheckLines() {
+	public void CheckLines(bool t) {
 		int linesCleared = 0;
 		for (int i = 0; i < grid.GetHeight(); i++) {
 			bool lineFull = true;
@@ -157,38 +190,83 @@ public partial class Main : Node
 			}
 		}
 
+		lineCount += linesCleared;
+		IncreaseLevel();
+
+		int score = 0;
 		switch (linesCleared) {
 			case 0:
-				if (false) IncreaseScore(400); // if (false) represents T-Spin for now
-				return;
+				if (t) score = 400;
+				break;
 			case 1:
-				if (false) IncreaseScore(800);
-				else IncreaseScore(100);
-				return;
+				if (t) {
+					score = 800;
+					b2b = backToBack.TSPIN;
+					b2bCount++;
+					}
+				else {
+					score = 100;
+					b2b = backToBack.NONE;
+					b2bCount = -1;
+				}
+				break;
 			case 2:
-				if (false) IncreaseScore(1200);
-				else IncreaseScore(300);
-				return;
+				if (t) {
+					score = 1200;
+					b2b = backToBack.TSPIN;
+					b2bCount++;
+					}
+				else {
+					score = 300;
+					b2b = backToBack.NONE;
+					b2bCount = -1;
+				}
+				break;
 			case 3:
-				if (false) IncreaseScore(1600);
-				else IncreaseScore(500);
-				return;
+				if (t) {
+					score = 1600;
+					b2b = backToBack.TSPIN;
+					b2bCount++;
+					}
+				else {
+					score = 500;
+					b2b = backToBack.NONE;
+					b2bCount = -1;
+				}
+				break;
 			case 4:
-				IncreaseScore(800);
-				return;
+				score = 800;
+				b2b = backToBack.TETRIS;
+				b2bCount++;
+				break;
 			default:
-				return;
+				break;
 		}
+		if (b2bCount > 0) score = (int)(score * 1.5);
+		IncreaseScore(score);
 	}
 
 	public void LowerPiece() {
-		controller.piece.ShiftD();
+		if (!controller.piece.ShiftD()) grace--;
+		if (grace <= 0) {
+			controller.piece.Drop();
+			GetNextPiece();
+		}
 		fallTimer.Start(fallTime);
 	}
 
 	public void IncreaseScore(int s) {
-		score += s;
+		score += s * level;
 		scoreLabel.Text = $"Score: {score}";
+	}
+	public void IncreaseLevel() {
+		if (lineCount - 10 * level >= 0) {
+			level++;
+			dropSpeeds.TryGetValue(level, out fallTime);
+			GD.Print(fallTime);
+		}
+		levelLabel.Text = $"Level: {level}\n{lineCount % 10}/10";
+
 	}
 	
 	public void DebugGridInformation() {

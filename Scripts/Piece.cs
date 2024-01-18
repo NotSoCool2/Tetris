@@ -133,12 +133,12 @@ public abstract partial class Piece : Node2D {
 		return counter;
 	}
 
-	public void Drop() {
+	public virtual void Drop() {
 		for (int i = 0; i < tiles.Length; i++) {
 			RemoveChild(tiles[i].tileObj);
 			GetParent().AddChild(tiles[i].tileObj);
 		}
-		((Main)FindParent("Main")).CheckLines();
+		((Main)FindParent("Main")).CheckLines(false);
 		ghostPiece.QueueFree();
 		ghostPiece = null;
 		QueueFree();

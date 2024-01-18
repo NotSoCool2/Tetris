@@ -4,7 +4,7 @@ using System;
 public partial class PieceController : Node {
 	[Export] float arr, das, sdf;
 	[Export] Timer arrTimer, dasTimer, sdTimer;
-	[Export] public int sdLeniance;
+	[Export] public int sdGrace;
 	public int sd;
 	bool autoRepeat;
 	bool right;
@@ -34,9 +34,9 @@ public partial class PieceController : Node {
 			right = true;
 			dasTimer.Start(das / 1000);
 		}
-		if (Input.IsActionJustPressed("R Rotate")) { piece.RotateR(); sd = sdLeniance; }
-		if (Input.IsActionJustPressed("L Rotate")) { piece.RotateL(); sd = sdLeniance; }
-		if (Input.IsActionJustPressed("H Rotate")) { piece.RotateH(); sd = sdLeniance; }
+		if (Input.IsActionJustPressed("R Rotate")) { piece.RotateR(); sd = sdGrace; }
+		if (Input.IsActionJustPressed("L Rotate")) { piece.RotateL(); sd = sdGrace; }
+		if (Input.IsActionJustPressed("H Rotate")) { piece.RotateH(); sd = sdGrace; }
 
 		if (Input.IsActionJustPressed("Soft Drop")) {
 			if (piece.ShiftD()) main.IncreaseScore(1);

@@ -2,6 +2,7 @@ using Godot;
 
 [GlobalClass]
 public partial class T_Piece : Piece {
+    bool tSpin;
     public override (int, int)[,] rotations {
         get {
             return new (int y, int x)[,] { 
@@ -53,10 +54,21 @@ public partial class T_Piece : Piece {
 
     public override void RotateL() {
         base.RotateL();
-        isTSpin();
+        tSpin = isTSpin();
     }
     public override void RotateR() {
         base.RotateR();
-        isTSpin();
+        tSpin = isTSpin();
+    }
+
+    public override void Drop() {
+        for (int i = 0; i < tiles.Length; i++) {
+			RemoveChild(tiles[i].tileObj);
+			GetParent().AddChild(tiles[i].tileObj);
+		}
+		((Main)FindParent("Main")).CheckLines(tSpin);
+		ghostPiece.QueueFree();
+		ghostPiece = null;
+		QueueFree();
     }
 }

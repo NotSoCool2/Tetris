@@ -11,7 +11,7 @@ public partial class Tile : Node2D {
 		tileObj = obj;
 		if (!grid.PlaceInGrid(this, p)) {
 			GD.PrintErr($"Can't Spawn a tile on ({pos.x}, {pos.y})");
-			GD.Print(FindParent("Main"));
+			GD.Print(GetParent());
 		}
 	}
 
